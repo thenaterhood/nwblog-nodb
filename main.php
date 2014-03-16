@@ -45,6 +45,7 @@ class blog extends controllerBase{
 
 		$this->pageData['content'] = pullContent( $this->approot.'/pages/page_read' );
 		$this->pageData['blogid'] = $this->settings['id'];
+		$this->pageData['commentCode'] = $this->settings['comment_code'];
 
 		$session = $this->pageData['session'];
 
