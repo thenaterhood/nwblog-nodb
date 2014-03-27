@@ -267,7 +267,7 @@ class blog extends ControllerBase{
 			$post->tags = request::post('tags');
 			$post->updated = date(DATE_ATOM);
 
-			$file = request::post('file');
+			$file = $post->file;
 
 			$this->save_post_file( $post->dump(), $file );
 		}
@@ -302,19 +302,24 @@ class blog extends ControllerBase{
 		$post->tags = request::post('tags');
 		$post->datestamp = date(DATE_ATOM);
 		$post->updated = date(DATE_ATOM);
-		$file = request::post('file');
 
 		if ( $nodeid == '' )
 			$nodeDate = date("Y.m.d");
 
-		$post->nodeid = $nodeDate;
-		$post->save();
+		if ( getConfigOption('use_db') ){
+			$post->nodeid = $nodeDate;
+			$post->save();
 
-		$post->nodeid = $post->nodeid . '.' . $post->id;
-		$post->save();
+			$post->nodeid = $post->nodeid . '.' . $post->id;
+			$post->save();
+			$this->pageData['saved'] = $post->nodeid;
+
+		} else {
+			$nodename = $this->save_post_file( $post->as_array() );
+			$this->pageData['saved'] = $nodename;
+		}
 
 		$this->pageData['content'] = pullContent( $this->approot.'/pages/page_savedpost' );
-		$this->pageData['saved'] = $post->nodeid;
 
 		$this->pageData['blogid'] = $this->settings['id'];
 
@@ -329,7 +334,7 @@ class blog extends ControllerBase{
 	/////////////////////////////////////////////////////////////////
 	// Private functions (internal functionality)
 	/////////////////////////////////////////////////////////////////
-	private function save_post_file( $postData, $file ){
+	private function save_post_file( $postData, $file='' ){
 
 		$pathinfo = pathinfo($file);
 		$postpath = $this->settings['post_directory'];
