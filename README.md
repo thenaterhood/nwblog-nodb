@@ -19,6 +19,21 @@ necessary. Be sure to observe standard PHP syntax
 as the file will be directly included in the blog 
 application.
 
+This application is now capable of handling blogs 
+OR flat files. It relies on thenaterweb's database 
+setting in order to determine which to use.
+
+Settings can be placed in the (well commented) 
+blog-config.php file.
+
+The application supports multiple blogs. In order 
+to use this capability, add additional config.php files 
+with the syntax BlogName-config.php, and register BlogName 
+as an application alias of blog in the index.php file.
+
+Doesn't make sense? Check out thenaterweb wiki for more 
+information.
+
 License
 -------------
 Licensed under the BSD License. See the LICENSE 
