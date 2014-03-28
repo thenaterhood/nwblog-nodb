@@ -90,6 +90,7 @@ class blog extends ControllerBase{
 
 		$post = $this->get_post();
 		$this->pageData['displaypost'] = $post;
+		$this->pageData['commentCode'] = $this->settings['comment_code'];
 		$this->pageData['outdated'] = ( ( strtotime('today') - strtotime($post->datestamp) ) > 31556916 ); 
 
 		render_php_template( $this->template, $this->pageData );
