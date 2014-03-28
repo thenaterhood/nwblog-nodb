@@ -124,12 +124,12 @@ class blog extends ControllerBase{
 
 		$session = $this->pageData['session'];
 
-		$post = $this->get_post();
+		$post = $this->get_post()->dump();
 
-		print '<h1>' . $post->dump()['title'] . '</h1>';
-		print '<h2>' . $post->dump()['datestamp'] . '</h2>';
+		print '<h1>' . $post['title'] . '</h1>';
+		print '<h2>' . $post['datestamp'] . '</h2>';
 
-		print $post->dump()['content'];
+		print $post['content'];
 
 
 	}
